@@ -11,18 +11,19 @@ addon_info = {
 	# for previously unpublished addons, please follow the community guidelines at:
 	# https://bitbucket.org/nvdaaddonteam/todo/raw/master/guideLines.txt
 	# add-on Name, internal for nvda
-	"addon_name" : "addonTemplate",
+	"addon_name" : "formatfactory",
 	# Add-on summary, usually the user visible name of the addon.
 	# Translators: Summary for this add-on to be shown on installation and add-on information.
-	"addon_summary" : _("Add-on user visible name"),
+	"addon_summary" : _("format factory"),
 	# Add-on description
 	# Translators: Long description to be shown for this add-on on add-on information from add-ons manager
-	"addon_description" : _("""Description for the add-on.
-It can span multiple lines."""),
+	"addon_description" : _("""this add-on will increase the accessility of format factory by simplifying the navigation in the main window.
+* you can navigate through the buttons winth left and right arrow.
+* you can switch between tabs using ctrl+tab and ctrl+shift+tab."""),
 	# version
-	"addon_version" : "x.y",
+	"addon_version" : "0.1",
 	# Author(s)
-	"addon_author" : u"name <name@domain.com>",
+	"addon_author" : u"David Parduhn <xkill85@gmx.net>",
 	# URL for the add-on documentation support
 	"addon_url" : None,
 	# Documentation file name
