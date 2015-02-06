@@ -18,18 +18,24 @@ class ff_button(IAccessible):
 		self.doAction(0)
 
 class AppModule(appModuleHandler.AppModule):
+	def getbuttoncontainer(self, object, version):
+		try:
+			if version == u'3.3.5.0':
+				return object.firstChild.next.firstChild.firstChild.firstChild
+			elif version == u'3.5.0.0':
+				return object.firstChild.firstChild.firstChild.firstChild
+		except AttributeError:
+			pass
+	def gettabcontainer(self, object, version):
+		if version == u'3.3.5.0':
+			return object.firstChild.next.firstChild.firstChild.next.firstChild
+		elif version == u'3.5.0.0':
+			return object.firstChild.firstChild.firstChild.next.firstChild
+
 	def event_NVDAObject_init(self, obj):
 		if obj.name == u'Output':
 			obj.shouldAllowIAccessibleFocusEvent = False
 
-	def event_gainFocus(self, obj, nextHandler):
-		if obj.name != None:
-			if obj.name in self.productName+' '+self.productVersion:
-				try:
-					obj.firstChild.next.firstChild.firstChild.firstChild.firstChild.setFocus()
-				except AttributeError:
-					pass
-		nextHandler()
 	__gestures = {
 		"kb:rightarrow": "nextbutton",
 		"kb:leftarrow": "prevbutton",
@@ -40,27 +46,34 @@ class AppModule(appModuleHandler.AppModule):
 		res = -1
 		fg = api.getForegroundObject()
 		if fg.name in self.productName+' '+self.productVersion:
-			for x in fg.firstChild.next.firstChild.firstChild.firstChild.children:
+			for x in self.getbuttoncontainer(fg, self.productVersion).children:
 				if controlTypes.STATE_SELECTED in x.states:
 					res = x.IAccessibleChildID -1
 			return res
 	def script_nextbutton(self, gesture):
 		fg = api.getForegroundObject()
-		if fg.name in self.productName+' '+self.productVersion:
-			obj = fg.firstChild.next.firstChild.firstChild.firstChild
+		if api.getFocusObject().name == u'Menu Bar' or api.getFocusObject().role == controlTypes.ROLE_MENUITEM:
+			gesture.send()
+			return
+		elif fg.name in self.productName+' '+self.productVersion:
+			obj = self.getbuttoncontainer(fg, self.productVersion)
 			id = self.getcurrentbutton()
 			if id == obj.childCount -1:
 				newid = 0
 			else:
 				newid = id +1
 			obj.children[newid].setFocus()
+			return
 		else:
 			gesture.send()
 
 	def script_prevbutton(self, gesture):
 		fg = api.getForegroundObject()
-		if fg.name in self.productName+' '+self.productVersion:
-			obj = fg.firstChild.next.firstChild.firstChild.firstChild
+		if api.getFocusObject().name == u'Menu Bar' or api.getFocusObject().role == controlTypes.ROLE_MENUITEM:
+			gesture.send()
+			return
+		elif fg.name in self.productName+' '+self.productVersion:
+			obj = self.getbuttoncontainer(fg, self.productVersion)
 			id = self.getcurrentbutton()
 			if id == 0:
 				newid = obj.childCount -1
@@ -74,7 +87,7 @@ class AppModule(appModuleHandler.AppModule):
 		res = -1
 		fg = api.getForegroundObject()
 		if fg.name in self.productName+' '+self.productVersion:
-			obj = fg.firstChild.next.firstChild.firstChild.next.firstChild
+			obj = self.gettabcontainer(fg, self.productVersion)
 			for x in obj.children:
 				if controlTypes.STATE_SELECTED in x.states:
 					res = x.IAccessibleChildID -1
@@ -83,7 +96,7 @@ class AppModule(appModuleHandler.AppModule):
 	def script_nextpage(self, gesture):
 		fg = api.getForegroundObject()
 		if fg.name in self.productName+' '+self.productVersion:
-			obj = fg.firstChild.next.firstChild.firstChild.next.firstChild
+			obj = self.gettabcontainer(fg, self.productVersion)
 			id = self.getcurrenttab()
 			if id == obj.childCount -1:
 				newid = 0
@@ -98,7 +111,7 @@ class AppModule(appModuleHandler.AppModule):
 	def script_prevpage(self, gesture):
 		fg = api.getForegroundObject()
 		if fg.name in self.productName+' '+self.productVersion:
-			obj = fg.firstChild.next.firstChild.firstChild.next.firstChild
+			obj = self.gettabcontainer(fg, self.productVersion)
 			id = self.getcurrenttab()
 			if id == 0:
 				newid = obj.childCount -1
