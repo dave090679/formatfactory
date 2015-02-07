@@ -45,7 +45,7 @@ class AppModule(appModuleHandler.AppModule):
 	def getcurrentbutton(self):
 		res = -1
 		fg = api.getForegroundObject()
-		if fg.name in self.productName+' '+self.productVersion:
+		if fg.name.split(' ')[-1] in self.productVersion:
 			for x in self.getbuttoncontainer(fg, self.productVersion).children:
 				if controlTypes.STATE_SELECTED in x.states:
 					res = x.IAccessibleChildID -1
@@ -55,7 +55,7 @@ class AppModule(appModuleHandler.AppModule):
 		if api.getFocusObject().name == u'Menu Bar' or api.getFocusObject().role == controlTypes.ROLE_MENUITEM:
 			gesture.send()
 			return
-		elif fg.name in self.productName+' '+self.productVersion:
+		elif fg.name.split(' ')[-1] in self.productVersion:
 			obj = self.getbuttoncontainer(fg, self.productVersion)
 			id = self.getcurrentbutton()
 			if id == obj.childCount -1:
@@ -72,7 +72,7 @@ class AppModule(appModuleHandler.AppModule):
 		if api.getFocusObject().name == u'Menu Bar' or api.getFocusObject().role == controlTypes.ROLE_MENUITEM:
 			gesture.send()
 			return
-		elif fg.name in self.productName+' '+self.productVersion:
+		elif fg.name.split(' ')[-1] in self.productVersion:
 			obj = self.getbuttoncontainer(fg, self.productVersion)
 			id = self.getcurrentbutton()
 			if id == 0:
@@ -86,7 +86,7 @@ class AppModule(appModuleHandler.AppModule):
 	def getcurrenttab(self):
 		res = -1
 		fg = api.getForegroundObject()
-		if fg.name in self.productName+' '+self.productVersion:
+		if fg.name.split(' ')[-1] in self.productVersion:
 			obj = self.gettabcontainer(fg, self.productVersion)
 			for x in obj.children:
 				if controlTypes.STATE_SELECTED in x.states:
@@ -95,7 +95,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_nextpage(self, gesture):
 		fg = api.getForegroundObject()
-		if fg.name in self.productName+' '+self.productVersion:
+		if fg.name.split(' ')[-1] in self.productVersion:
 			obj = self.gettabcontainer(fg, self.productVersion)
 			id = self.getcurrenttab()
 			if id == obj.childCount -1:
@@ -110,7 +110,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def script_prevpage(self, gesture):
 		fg = api.getForegroundObject()
-		if fg.name in self.productName+' '+self.productVersion:
+		if fg.name.split(' ')[-1] in self.productVersion:
 			obj = self.gettabcontainer(fg, self.productVersion)
 			id = self.getcurrenttab()
 			if id == 0:
