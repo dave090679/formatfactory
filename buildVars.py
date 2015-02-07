@@ -21,7 +21,7 @@ addon_info = {
 * you can navigate through the buttons winth left and right arrow.
 * you can switch between tabs using ctrl+tab and ctrl+shift+tab."""),
 	# version
-	"addon_version" : "0.3",
+	"addon_version" : u"0.3",
 	# Author(s)
 	"addon_author" : u"David Parduhn <xkill85@gmx.net>",
 	# URL for the add-on documentation support
