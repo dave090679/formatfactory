@@ -19,17 +19,19 @@ class ff_button(IAccessible):
 
 class AppModule(appModuleHandler.AppModule):
 	def getbuttoncontainer(self, object, version):
+		version_n = int(version.replace('.',''))
 		try:
-			if version == u'3.3.5.0':
+			if version_n == 3350:
 				return object.firstChild.next.firstChild.firstChild.firstChild
-			elif version == u'3.5.0.0':
+			elif version_n >= 3500:
 				return object.firstChild.firstChild.firstChild.firstChild
 		except AttributeError:
 			pass
 	def gettabcontainer(self, object, version):
-		if version == u'3.3.5.0':
+		version_n = int(version.replace('.',''))
+		if version_n == 3350:
 			return object.firstChild.next.firstChild.firstChild.next.firstChild
-		elif version == u'3.5.0.0':
+		elif version_n >= 3500:
 			return object.firstChild.firstChild.firstChild.next.firstChild
 
 	def event_NVDAObject_init(self, obj):

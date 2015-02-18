@@ -11,6 +11,9 @@ in the main window of Format factory, the following shortcut keys are available:
 * enter or spacebar: press the selected button  (launch the selected converter)
 
 
+## changes in 0.4:
+* extended the support for Version 3.5 to all versions from 3.5. Now I hopefully don't havew to touch my code until the pcfreetime guys change the object hierarchy of formatfactory again.
+ 
 ## changes in 0.3:
 * fix: the add-on works in cyrillic languages like russian
 
